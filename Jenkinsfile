@@ -1,17 +1,16 @@
 pipeline {
     agent any
-
     stages {
         stage('Pull from GitHub') {
             steps {
-                echo 'Successfully connected to GitHub!'
+                echo 'Successfully pulled worldtime-api from GitHub!'
                 checkout scm
             }
         }
-        stage('MuleSoft Build') {
+        stage('Build') {
             steps {
-                echo 'Building your worldtime-api...'
-                // If you have Maven installed, you can add: bat 'mvn clean install'
+                echo 'Building project...'
+                // For MuleSoft, you will eventually add: bat 'mvn clean install'
             }
         }
     }
