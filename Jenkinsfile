@@ -15,8 +15,8 @@ pipeline {
         }
         stage('MuleSoft Build') {
             steps {
-                // Jenkins will now automatically set JAVA_HOME to JDK 17 before running this
-                bat 'mvn clean install -DskipTests' 
+                // Use your local .m2 folder and force an update check with -U
+                bat 'mvn clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository'
             }
         }
     }
