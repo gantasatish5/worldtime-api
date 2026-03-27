@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     tools {
-        // This must match the Name you gave in Manage Jenkins -> Tools
-        maven 'MAVEN_HOME' 
+        // We keep Java here, but we will call Maven manually below
         jdk 'JAVA_HOME' 
     }
 
@@ -14,11 +13,12 @@ pipeline {
             }
         }
         stage('MuleSoft Build') {
-    steps {
-        // We add -Dmaven.resolver.transport=wagon to fix the missing class error
-        bat 'mvn clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository -Dmaven.resolver.transport=wagon'
-    }
-}
+            steps {
+                // We use the full path to your mvn.cmd to bypass Jenkins tool conflicts
+                // We also add the aether connector fix directly in the command
+                bat '"C:\\Program Files\\apache-maven-3.9.14\\bin\\mvn.cmd" clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository -Dmaven.resolver.transport=wagon -Daether.connector.basic.threads=1'
+            }
+        }
     }
     
     post {
@@ -26,7 +26,7 @@ pipeline {
             echo 'MuleSoft API Build Successful!'
         }
         failure {
-            echo 'Build Failed. Please check the Console Output for Java or Maven errors.'
+            echo 'Build Failed. Checking for library conflicts...'
         }
     }
 }
