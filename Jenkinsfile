@@ -15,7 +15,7 @@ pipeline {
         }
         stage('MuleSoft Build') {
     steps {
-        // We add -Dmaven.wagon.http.ssl.insecure=true and a specific provider fix
+        // We add -Dmaven.resolver.transport=wagon to fix the missing class error
         bat 'mvn clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository -Dmaven.resolver.transport=wagon'
     }
 }
