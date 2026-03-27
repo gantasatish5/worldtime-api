@@ -1,11 +1,9 @@
 pipeline {
     agent any
-
     tools {
-        // We keep Java here, but we will call Maven manually below
+        maven 'MAVEN_HOME' 
         jdk 'JAVA_HOME' 
     }
-
     stages {
         stage('Checkout') {
             steps {
@@ -14,19 +12,13 @@ pipeline {
         }
         stage('MuleSoft Build') {
             steps {
-                // We use the full path to your mvn.cmd to bypass Jenkins tool conflicts
-                // We also add the aether connector fix directly in the command
-                bat '"C:\\Program Files\\apache-maven-3.9.14\\bin\\mvn.cmd" clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository -Dmaven.resolver.transport=wagon -Daether.connector.basic.threads=1'
+                // With Maven 3.8.8, all the "Missing Class" errors will disappear
+                bat 'mvn clean install -DskipTests -U'
             }
         }
     }
-    
     post {
-        success {
-            echo 'MuleSoft API Build Successful!'
-        }
-        failure {
-            echo 'Build Failed. Checking for library conflicts...'
-        }
+        success { echo 'SUCCESS: MuleSoft API Build Complete!' }
+        failure { echo 'FAILED: Check logs for errors.' }
     }
 }
