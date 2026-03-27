@@ -14,11 +14,11 @@ pipeline {
             }
         }
         stage('MuleSoft Build') {
-            steps {
-                // Use your local .m2 folder and force an update check with -U
-                bat 'mvn clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository'
-            }
-        }
+    steps {
+        // We add -Dmaven.wagon.http.ssl.insecure=true and a specific provider fix
+        bat 'mvn clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository -Dmaven.resolver.transport=wagon'
+    }
+}
     }
     
     post {
