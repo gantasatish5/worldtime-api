@@ -4,16 +4,14 @@ pipeline {
         maven 'MAVEN_HOME' 
         jdk 'JAVA_HOME' 
     }
-    stages {
-        stage('Checkout') {
+    stage('MuleSoft Build') {
             steps {
-                checkout scm
-            }
-        }
-        stage('MuleSoft Build') {
-            steps {
-                // With Maven 3.8.8, all the "Missing Class" errors will disappear
-                bat 'mvn clean install -DskipTests -U'
+                script {
+                    // This opens the internal Java modules that the Mule plugin is complaining about
+                    withEnv(['MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED']) {
+                        bat 'mvn clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository'
+                    }
+                }
             }
         }
     }
