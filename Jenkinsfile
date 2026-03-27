@@ -1,17 +1,31 @@
 pipeline {
     agent any
+
+    tools {
+        maven 'MAVEN_HOME' // This matches the name you gave in Jenkins Tools
+    }
+
     stages {
-        stage('Pull from GitHub') {
+        stage('Checkout') {
             steps {
-                echo 'Successfully pulled worldtime-api from GitHub!'
                 checkout scm
             }
         }
-        stage('Build') {
+        stage('MuleSoft Unit Test & Build') {
             steps {
-                echo 'Building project...'
-                // For MuleSoft, you will eventually add: bat 'mvn clean install'
+                // 'bat' is for Windows commands. 
+                // This compiles the code and runs MUnit tests.
+                bat 'mvn clean install -DskipTests' 
             }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Build Completed Successfully!'
+        }
+        failure {
+            echo 'Build Failed. Check the logs and your Mule code.'
         }
     }
 }
