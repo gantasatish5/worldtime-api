@@ -3,45 +3,46 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>dbede75e-6b29-4063-ac16-b9cad78a7cc4</groupId> 
+	<groupId>dbede75e-6b29-4063-ac16-b9cad78a7cc4</groupId>
 	<artifactId>schduler</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
 	<name>schduler</name>
 
 	<properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <app.runtime>4.6.0</app.runtime> <mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
-</properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<app.runtime>4.6.0</app.runtime>
+		<mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
+		<anypoint.platform.api.id>20819664</anypoint.platform.api.id>
+	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
-    <groupId>org.mule.tools.maven</groupId>
-    <artifactId>mule-maven-plugin</artifactId>
-    <version>3.8.2</version>
-    <extensions>true</extensions>
-    <configuration>
-        <properties>
-            <mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
-        </properties>
-        
-        <cloudhub2Deployment>
-            <uri>https://anypoint.mulesoft.com</uri>
-            <provider>MC</provider>
-            <environment>Sandbox</environment>
-            <target>Cloudhub-US-East-2</target>
-            <muleVersion>4.6.0</muleVersion>
-            <username>${anypoint.username}</username>
-            <password>${anypoint.password}</password>
-            <applicationName>satish-worldtime-api-ch2</applicationName>
-            <replicas>1</replicas>
-            <vCores>0.1</vCores>
-        </cloudhub2Deployment>
-    </configuration>
-</plugin>
+				<groupId>org.mule.tools.maven</groupId>
+				<artifactId>mule-maven-plugin</artifactId>
+				<version>${mule.maven.plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<cloudhub2Deployment>
+						<uri>https://anypoint.mulesoft.com</uri>
+						<provider>MC</provider>
+						<environment>Sandbox</environment>
+						<target>Cloudhub-US-East-2</target>
+						<muleVersion>${app.runtime}</muleVersion>
+						<username>${anypoint.username}</username>
+						<password>${anypoint.password}</password>
+						<applicationName>satish-worldtime-api-ch2</applicationName>
+						<replicas>1</replicas>
+						<vCores>0.1</vCores>
+						<properties>
+							<anypoint.platform.api.id>${anypoint.platform.api.id}</anypoint.platform.api.id>
+						</properties>
+					</cloudhub2Deployment>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -62,9 +63,9 @@
 
 	<repositories>
 		<repository>
-			<id>anypoint-exchange-v2</id>
+			<id>anypoint-exchange-v3</id>
 			<name>Anypoint Exchange</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v2/maven</url>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
 			<layout>default</layout>
 		</repository>
 		<repository>
@@ -78,7 +79,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>mulesoft-releases</id>
-			<name>mulesoft release repository</name>
+			<name>MuleSoft Releases Repository</name>
 			<layout>default</layout>
 			<url>https://repository.mulesoft.org/releases/</url>
 			<snapshots>
@@ -86,12 +87,13 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
 	<distributionManagement>
-    <repository>
-        <id>anypoint-exchange-v2</id>
-        <name>Corporate Repository</name>
-        <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
-        <layout>default</layout>
-    </repository>
-</distributionManagement>
+		<repository>
+			<id>anypoint-exchange-v3</id>
+			<name>Corporate Repository</name>
+			<url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
+			<layout>default</layout>
+		</repository>
+	</distributionManagement>
 </project>
