@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     tools {
+        // These must match the names in your Manage Jenkins -> Tools configuration
         maven 'MAVEN_HOME'
         jdk 'JAVA_HOME'
     }
@@ -9,25 +10,29 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Pulls the latest code from your GitHub repo
                 checkout scm
             }
         }
 
-        stage('Build & Deploy to CloudHub 2.0') {
+        stage('MuleSoft Build & Deploy') {
             steps {
                 script {
+                    // This block connects to the secret credential you created in Jenkins
                     withCredentials([usernamePassword(credentialsId: 'anypoint-credentials', 
                                      usernameVariable: 'Satishganta', 
                                      passwordVariable: 'Possibleme22$$')]) {
                         
-                        // Combined Java 17 permissions
+                        // These Java 17 permissions are required for the Mule Maven Plugin 3.8.2
                         withEnv(["MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED"]) {
                             
-                            // We run 'clean deploy' together. This builds the JAR and pushes to Exchange/CloudHub in one go.
-                            bat "mvn clean deploy -DskipTests" +
+                            // EXPLAINING THE COMMAND:
+                            // clean: clears old files
+                            // install: builds the JAR and puts it in local .m2 (fixes the "Artifact Not Found" error)
+                            // deploy: uploads to Anypoint Exchange AND triggers CloudHub 2.0 deployment
+                            bat "mvn clean install deploy -DskipTests " +
                                 "-Danypoint.username=${Satishganta} " +
                                 "-Danypoint.password=${Possibleme22$$} " +
-                                "-Dmule.artifact=target/schduler-1.0.0-SNAPSHOT-mule-application.jar " +
                                 "-Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository"
                         }
                     }
@@ -38,10 +43,10 @@ pipeline {
 
     post {
         success {
-            echo 'SUCCESS: API Published to Exchange and Deployment started in CloudHub 2.0!'
+            echo 'CONGRATULATIONS: Build passed, asset uploaded to Exchange, and CloudHub 2.0 deployment started!'
         }
         failure {
-            echo 'FAILED: Check logs for Java, Maven, or Exchange errors.'
+            echo 'FAILED: Check the log for a 401 (Auth), 409 (Version Conflict), or 400 (Region) error.'
         }
     }
 }
