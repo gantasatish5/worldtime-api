@@ -16,8 +16,8 @@ pipeline {
         stage('MuleSoft Build') {
             steps {
                 script {
-                    // Added java.util permission for Maven Plugin 3.8.2
-                    withEnv(["MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED"]) {
+                    // Added java.lang, java.util, and sun.net permissions
+                    withEnv(["MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED"]) {
                         bat 'mvn clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository'
                     }
                 }
@@ -31,8 +31,8 @@ pipeline {
                                      usernameVariable: 'Satishganta', 
                                      passwordVariable: 'Possibleme22$$')]) {
                         
-                        // Apply the same MAVEN_OPTS here
-                        withEnv(["MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED"]) {
+                        // Use the exact same MAVEN_OPTS here as well
+                        withEnv(["MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED"]) {
                             bat "mvn mule:deploy -DskipTests " +
                                 "-Danypoint.username=${Satishganta} " +
                                 "-Danypoint.password=${Possibleme22$$} " +
@@ -47,10 +47,10 @@ pipeline {
 
     post {
         success {
-            echo 'SUCCESS: API build complete and deployment initiated to CloudHub 2.0!'
+            echo 'SUCCESS: Build finished and deployment to CloudHub 2.0 started!'
         }
         failure {
-            echo 'FAILED: Deployment failed. Check the logs above.'
+            echo 'FAILED: Check logs for Java or Maven errors.'
         }
     }
 }
