@@ -24,9 +24,10 @@ pipeline {
                         withEnv(["MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED"]) {
                             
                             // We run 'clean deploy' together. This builds the JAR and pushes to Exchange/CloudHub in one go.
-                            bat "mvn clean deploy -DskipTests " +
+                            bat "mvn clean deploy -DskipTests" +
                                 "-Danypoint.username=${Satishganta} " +
                                 "-Danypoint.password=${Possibleme22$$} " +
+                                "-Dmule.artifact=target/schduler-1.0.0-SNAPSHOT-mule-application.jar " +
                                 "-Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository"
                         }
                     }
