@@ -20,25 +20,24 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.mule.tools.maven</groupId>
-				<artifactId>mule-maven-plugin</artifactId>
-				<version>${mule.maven.plugin.version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<cloudhub2Deployment>
-						<uri>https://anypoint.mulesoft.com</uri>
-						<provider>MC</provider>
-						<environment>Sandbox</environment>
-						<target>Cloudhub-US-East-1</target>
-						<muleVersion>${app.runtime}</muleVersion>
-						<username>${anypoint.username}</username>
-						<password>${anypoint.password}</password>
-						<applicationName>satish-worldtime-api-ch2</applicationName>
-						<replicas>1</replicas>
-						<vCores>0.1</vCores>
-					</cloudhub2Deployment>
-				</configuration>
-			</plugin>
+    <groupId>org.mule.tools.maven</groupId>
+    <artifactId>mule-maven-plugin</artifactId>
+    <version>3.8.2</version> <extensions>true</extensions>
+    <configuration>
+        <cloudhub2Deployment>
+            <uri>https://anypoint.mulesoft.com</uri>
+            <provider>MC</provider>
+            <environment>Sandbox</environment>
+            <target>Cloudhub-US-East-1</target>
+            <muleVersion>4.4.0</muleVersion>
+            <username>${anypoint.username}</username>
+            <password>${anypoint.password}</password>
+            <applicationName>satish-worldtime-api-ch2</applicationName>
+            <replicas>1</replicas>
+            <vCores>0.1</vCores>
+        </cloudhub2Deployment>
+    </configuration>
+</plugin>
 		</plugins>
 	</build>
 
