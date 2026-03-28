@@ -27,14 +27,14 @@ pipeline {
         stage('Deploy to CloudHub') {
             steps {
                 script {
-                    // Pull credentials securely from Jenkins (ID must be 'anypoint-credentials')
+                    // Ensure ID matches exactly what you created in Jenkins Credentials
                     withCredentials([usernamePassword(credentialsId: 'anypoint-credentials', 
                                      usernameVariable: 'Satishganta', 
                                      passwordVariable: 'Possibleme22$$')]) {
                         
-                        // We use double quotes for the bat command to allow variable injection
-                        withEnv(['MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED']) {
-                            bat "mvn mule:deploy -DskipTests -Danypoint.username=${AP_USER} -Danypoint.password=${AP_PASS} -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository"
+                        // We use double quotes to allow Jenkins to swap ${AP_USER} for the real value
+                        withEnv(["MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED"]) {
+                            bat "mvn mule:deploy -DskipTests -Danypoint.username=${env.AP_USER} -Danypoint.password=${env.AP_PASS} -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository"
                         }
                     }
                 }
