@@ -1,107 +1,16 @@
-pipeline {
-
-    agent any
-
-    
-
-    tools {
-
-        maven 'MAVEN_HOME' 
-
-        jdk 'JAVA_HOME' 
-
-    }
-
-    
-
-    stages {
-
-        stage('Checkout') {
-
+stage('Deploy to CloudHub') {
             steps {
-
-                checkout scm
-
-            }
-
-        }
-
-        
-
-        stage('MuleSoft Build') {
-
-            steps {
-
                 script {
-
-                    // Keeping the Java 17 fix we discovered earlier
-
-                    withEnv(['MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED']) {
-
-                        bat 'mvn clean install -DskipTests -U -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository'
-
-                    }
-
-                }
-
-            }
-
-        }
-
-
-
-        stage('Deploy to CloudHub') {
-
-            steps {
-
-                script {
-
-                    // This pulls your credentials securely from Jenkins Credentials Provider
-
-                    // Make sure you have created a credential with ID 'anypoint-credentials'
-
+                    // Pull credentials securely from Jenkins
                     withCredentials([usernamePassword(credentialsId: 'anypoint-credentials', 
-
                                      usernameVariable: 'Satishganta', 
-
                                      passwordVariable: 'Possibleme22$$')]) {
-
                         
-
-                        // We call the deploy goal and fill the placeholders we put in the pom.xml
-
+                        // IMPORTANT: Use double quotes ("...") for the bat command
                         withEnv(['MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED']) {
-
                             bat "mvn mule:deploy -DskipTests -Danypoint.username=${AP_USER} -Danypoint.password=${AP_PASS} -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository"
-
                         }
-
                     }
-
                 }
-
             }
-
         }
-
-    }
-
-    
-
-    post {
-
-        success {
-
-            echo 'SUCCESS: MuleSoft API Built and Deployed to CloudHub!'
-
-        }
-
-        failure {
-
-            echo 'FAILED: Check the console logs for build or deployment errors.'
-
-        }
-
-    }
-
-}
