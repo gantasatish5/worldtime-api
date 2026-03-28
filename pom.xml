@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
+	<groupId>dbede75e-6b29-4063-ac16-b9cad78a7cc4</groupId> 
 	<artifactId>schduler</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
 	<name>schduler</name>
