@@ -26,8 +26,8 @@ pipeline {
                             
                             bat """
 mvn clean package mule:deploy -DskipTests ^
-"-Danypoint.username=%AP_USER%" ^
-"-Danypoint.password=%AP_PASS%" ^
+-Danypoint.username=%AP_USER% ^
+-Danypoint.password=%AP_PASS% ^
 -Dmaven.repo.local=C:/Users/ganta/.m2/repository
 """
                         }
