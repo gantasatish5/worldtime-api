@@ -16,16 +16,17 @@ pipeline {
         stage('MuleSoft Build & Deploy') {
             steps {
                 script {
+                    // Use AP_USER and AP_PASS as labels
                     withCredentials([usernamePassword(credentialsId: 'anypoint-credentials', 
-                                     usernameVariable: 'AP_USER', 
-                                     passwordVariable: 'AP_PASS')]) {
+                                     usernameVariable: 'Satishganta', 
+                                     passwordVariable: 'Possibleme22$$')]) {
                         
                         withEnv(["MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED"]) {
                             
-                            // CHANGED: Removed 'install deploy' and used 'mule:deploy'
+                            // Use the variables AP_USER and AP_PASS here
                             bat "mvn clean mule:deploy -DskipTests " +
-                                "-Danypoint.username=${Satishganta} " +
-                                "-Danypoint.password=${Possibleme22$$} " +
+                                "-Danypoint.username=${AP_USER} " + 
+                                "-Danypoint.password=${AP_PASS} " +
                                 "-Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository"
                         }
                     }
@@ -39,7 +40,7 @@ pipeline {
             echo 'SUCCESS: API is now deploying to CloudHub 2.0!'
         }
         failure {
-            echo 'FAILED: Check the logs for 401 (Auth) or 400 (Config) errors.'
+            echo 'FAILED: Check for credentials or configuration errors.'
         }
     }
 }
