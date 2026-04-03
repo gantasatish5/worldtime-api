@@ -16,18 +16,19 @@ pipeline {
         stage('MuleSoft Build & Deploy') {
             steps {
                 script {
-                    // FIXED: usernameVariable and passwordVariable now match the bat command below
-                    withCredentials([usernamePassword(credentialsId: 'anypoint-credentials', 
-                                     usernameVariable: 'AP_USER', 
-                                     passwordVariable: 'AP_PASS')]) {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'anypoint-credentials', 
+                        usernameVariable: 'AP_USER', 
+                        passwordVariable: 'AP_PASS'
+                    )]) {
                         
                         withEnv(["MAVEN_OPTS=--add-opens java.base/sun.net.www.protocol.jar=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED"]) {
                             
-bat """
+                            bat """
 mvn clean package mule:deploy -DskipTests ^
 "-Danypoint.username=%AP_USER%" ^
 "-Danypoint.password=%AP_PASS%" ^
--Dmaven.repo.local=C:\Users\ganta\.m2\repository
+-Dmaven.repo.local=C:/Users/ganta/.m2/repository
 """
                         }
                     }
@@ -41,7 +42,7 @@ mvn clean package mule:deploy -DskipTests ^
             echo 'SUCCESS: API is now deploying to CloudHub 2.0!'
         }
         failure {
-            echo 'FAILED: Deployment failed. Please check Jenkins Credentials or pom.xml settings.'
+            echo 'FAILED: Deployment failed. Check logs.'
         }
     }
 }
