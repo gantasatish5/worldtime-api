@@ -5,7 +5,8 @@
 
 	<groupId>dbede75e-6b29-4063-ac16-b9cad78a7cc4</groupId>
 	<artifactId>schduler</artifactId>
-	<version>1.0.2-SNAPSHOT</version> <packaging>mule-application</packaging>
+	<version>1.0.3-SNAPSHOT</version>
+	<packaging>mule-application</packaging>
 
 	<name>schduler</name>
 
@@ -26,7 +27,8 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-					<classifier>mule-application</classifier> <cloudhub2Deployment>
+					<classifier>mule-application</classifier>
+					<cloudhub2Deployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<provider>MC</provider>
 						<environment>Sandbox</environment>
