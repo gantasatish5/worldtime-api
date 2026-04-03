@@ -97,5 +97,12 @@
         </pluginRepository>
     </pluginRepositories>
 
+<distributionManagement>
+    <repository>
+        <id>anypoint-exchange</id>
+        <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/dbede75e-6b29-4063-ac16-b9cad78a7cc4/maven</url>
+    </repository>
+</distributionManagement>
+
 
 </project>
