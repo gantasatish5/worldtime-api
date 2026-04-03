@@ -15,6 +15,7 @@
 		<app.runtime>4.6.0</app.runtime>
 		<mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
 		<anypoint.platform.api.id>20819664</anypoint.platform.api.id>
+		<skipExchangeHash>true</skipExchangeHash>
 	</properties>
 
 	<build>
