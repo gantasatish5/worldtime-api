@@ -7,7 +7,7 @@
 
     <groupId>dbede75e-6b29-4063-ac16-b9cad78a7cc4</groupId>
     <artifactId>worldtime-api</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <packaging>mule-application</packaging>
 
     <name>worldtime-api</name>
