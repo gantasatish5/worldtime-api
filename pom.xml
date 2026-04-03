@@ -5,20 +5,19 @@
 
 	<groupId>dbede75e-6b29-4063-ac16-b9cad78a7cc4</groupId>
 	<artifactId>schduler</artifactId>
-	<version>1.0.3-SNAPSHOT</version>
+	<version>1.0.4-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
 	<name>schduler</name>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<app.runtime>4.6.0</app.runtime>
-		<mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
-		<anypoint.platform.api.id>20819664</anypoint.platform.api.id>
-		<skipExchangeHash>true</skipExchangeHash>
-	</properties>
-
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <app.runtime>4.6.0</app.runtime>
+    <mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
+    <anypoint.platform.api.id>20819664</anypoint.platform.api.id>
+    <skipExchangeHash>true</skipExchangeHash>
+    </properties>
 	<build>
 		<plugins>
 			<plugin>
