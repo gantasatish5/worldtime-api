@@ -24,10 +24,10 @@ pipeline {
 
 bat """
     mvn clean install -DskipTests -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository ^
+    && mvn exchange:publish -DskipTests -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository ^
     && mvn mule:deploy -DskipTests ^
     "-Danypoint.username=%AP_USER%" ^
     "-Danypoint.password=%AP_PASS%" ^
-    "-DskipExchangeHash=true" ^
     -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository
 """
                 }
