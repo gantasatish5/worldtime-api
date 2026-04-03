@@ -31,7 +31,7 @@
 						<provider>MC</provider>
 						<environment>Sandbox</environment>
 						<target>Cloudhub-US-East-2</target>
-						<muleVersion>${app.runtime}</muleVersion>
+						<muleVersion>4.6.0</muleVersion>
 						<username>${anypoint.username}</username>
 						<password>${anypoint.password}</password>
 						<applicationName>satish-worldtime-api-ch2</applicationName>
