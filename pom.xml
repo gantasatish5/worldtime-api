@@ -8,7 +8,7 @@
     <!-- FIXED -->
     <groupId>dbede75e-6b29-4063-ac16-b9cad78a7cc4</groupId>
     <artifactId>worldtime-api</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <packaging>mule-application</packaging>
 
     <!-- FIXED -->
