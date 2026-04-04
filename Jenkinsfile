@@ -2,12 +2,11 @@ pipeline {
     agent any
 
     tools {
-        maven 'MAVEN_HOME'
+        maven 'MAVEN_HOME' 
         jdk 'JAVA_HOME'
     }
 
     stages {
-
         stage('Checkout') {
             steps {
                 checkout scm
@@ -21,15 +20,14 @@ pipeline {
                     usernameVariable: 'AP_USER',
                     passwordVariable: 'AP_PASS'
                 )]) {
-
-bat """
-    mvn clean install -DskipTests -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository ^
-    && mvn mule:deploy -DskipTests ^
-    "-Danypoint.username=%AP_USER%" ^
-    "-Danypoint.password=%AP_PASS%" ^
-    "-DskipExchangeHash=true" ^
-    -Dmaven.repo.local=C:\\Users\\ganta\\.m2\\repository
-"""
+                    // We MUST pass the credentials here to 'deploy' to Exchange
+                    bat """
+                    mvn clean deploy -DskipTests ^
+                    -Danypoint.username=%AP_USER% ^
+                    -Danypoint.password=%AP_PASS% ^
+                    -DmuleDeploy=false ^
+                    -Dmaven.repo.local=C:/Users/ganta/.m2/repository
+                    """
                 }
             }
         }
@@ -41,9 +39,9 @@ bat """
                     usernameVariable: 'AP_USER',
                     passwordVariable: 'AP_PASS'
                 )]) {
-
+                    // This stage starts the app using the asset we just published
                     bat """
-                    mvn mule:deploy ^
+                    mvn mule:deploy -DskipTests ^
                     -Danypoint.username=%AP_USER% ^
                     -Danypoint.password=%AP_PASS% ^
                     -Dmaven.repo.local=C:/Users/ganta/.m2/repository
