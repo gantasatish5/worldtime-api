@@ -7,13 +7,14 @@
 
     <groupId>dbede75e-6b29-4063-ac16-b9cad78a7cc4</groupId>
     <artifactId>worldtime-api</artifactId>
-    <version>1.2.8</version>
+    <version>1.5.0</version>
     <packaging>mule-application</packaging>
 
     <name>worldtime-api</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <app.runtime>4.6.0</app.runtime>
         <mule.maven.plugin.version>3.8.2</mule.maven.plugin.version>
         <anypoint.platform.api.id>20819664</anypoint.platform.api.id>
@@ -37,13 +38,21 @@
                         <applicationName>satish-worldtime-api-ch2</applicationName>
                         <replicas>1</replicas>
                         <vCores>0.1</vCores>
-                        <username>${anypoint.username}</username>
-                        <password>${anypoint.password}</password>
+                        
+                        <connectedAppClientId>${anypoint.client_id}</connectedAppClientId>
+                        <connectedAppClientSecret>${anypoint.client_secret}</connectedAppClientSecret>
+                        <connectedAppGrantType>client_credentials</connectedAppGrantType>
+
                         <properties>
                             <anypoint.platform.api.id>${anypoint.platform.api.id}</anypoint.platform.api.id>
                         </properties>
                     </cloudhub2Deployment>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.2.0</version>
             </plugin>
         </plugins>
     </build>
@@ -60,18 +69,24 @@
     <repositories>
         <repository>
             <id>anypoint-exchange-v3</id>
+            <name>Anypoint Exchange</name>
             <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+            <layout>default</layout>
         </repository>
         <repository>
             <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
             <url>https://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
             <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
             <url>https://repository.mulesoft.org/releases/</url>
+            <layout>default</layout>
         </pluginRepository>
     </pluginRepositories>
 </project>
