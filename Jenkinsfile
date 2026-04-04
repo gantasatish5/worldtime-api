@@ -21,12 +21,11 @@ stage('Build & Publish to Exchange') {
             passwordVariable: 'CLIENT_SECRET'
         )]) {
             bat """
-            mvn clean install -DskipTests -Dmaven.repo.local=C:/Users/ganta/.m2/repository ^
-            && mvn mule:deploy -DskipTests ^
+            mvn clean deploy -DskipTests ^
             -Danypoint.client_id=%CLIENT_ID% ^
             -Danypoint.client_secret=%CLIENT_SECRET% ^
-            -Danypoint.orgId=dbede75e-6b29-4063-ac16-b9cad78a7cc4 ^
             -DmuleDeploy=false ^
+            -DskipExchangeHash=true ^
             -Dmaven.repo.local=C:/Users/ganta/.m2/repository
             """
         }
