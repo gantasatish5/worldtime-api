@@ -14,24 +14,26 @@ pipeline {
         }
 
         stage('Build & Publish to Exchange') {
-            steps {
-                // Using Connected App here too to avoid personal password issues
-                withCredentials([usernamePassword(
-                    credentialsId: 'anypoint-connected-app', 
-                    usernameVariable: 'CLIENT_ID',
-                    passwordVariable: 'CLIENT_SECRET'
-                )]) {
-                    bat """
-                    mvn clean deploy -DskipTests ^
-                    -Danypoint.client_id=%CLIENT_ID% ^
-                    -Danypoint.client_secret=%CLIENT_SECRET% ^
-                    -DmuleDeploy=false ^
-                    -DskipExchangeHash=true ^
-                    -Dmaven.repo.local=C:/Users/ganta/.m2/repository
-                    """
-                }
-            }
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'anypoint-connected-app',
+            usernameVariable: 'CLIENT_ID',
+            passwordVariable: 'CLIENT_SECRET'
+        )]) {
+            // Using 'install' builds the JAR locally. 
+            // Then we trigger the mule-maven-plugin directly to avoid the 'exchange-pre-deploy' crash.
+            bat """
+            mvn clean install -DskipTests -Dmaven.repo.local=C:/Users/ganta/.m2/repository ^
+            && mvn org.mule.tools.maven:mule-maven-plugin:3.8.2:deploy ^
+            -Danypoint.client_id=%CLIENT_ID% ^
+            -Danypoint.client_secret=%CLIENT_SECRET% ^
+            -DmuleDeploy=false ^
+            -DskipExchangeHash=true ^
+            -Dmaven.repo.local=C:/Users/ganta/.m2/repository
+            """
         }
+    }
+}
 
         stage('Deploy to CloudHub 2.0') {
             steps {
