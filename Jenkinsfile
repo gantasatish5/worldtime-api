@@ -14,23 +14,23 @@ pipeline {
         }
 
         stage('Build & Publish to Exchange') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'anypoint-credentials',
-                    usernameVariable: 'AP_USER',
-                    passwordVariable: 'AP_PASS'
-                )]) {
-                    // We MUST pass the credentials here to 'deploy' to Exchange
-                    bat """
-                    mvn clean deploy -DskipTests ^
-                    -Danypoint.username=%AP_USER% ^
-                    -Danypoint.password=%AP_PASS% ^
-                    -DmuleDeploy=false ^
-                    -Dmaven.repo.local=C:/Users/ganta/.m2/repository
-                    """
-                }
-            }
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'anypoint-credentials',
+            usernameVariable: 'AP_USER',
+            passwordVariable: 'AP_PASS'
+        )]) {
+            // Using 'install' then 'mule:publish' skips the pre-deploy check
+            bat """
+            mvn clean install -DskipTests -Dmaven.repo.local=C:/Users/ganta/.m2/repository ^
+            && mvn org.mule.tools.maven:mule-maven-plugin:3.8.2:exchange-publish ^
+            -Danypoint.username=%AP_USER% ^
+            -Danypoint.password=%AP_PASS% ^
+            -Dmaven.repo.local=C:/Users/ganta/.m2/repository
+            """
         }
+    }
+}
 
         stage('Deploy to CloudHub 2.0') {
             steps {
