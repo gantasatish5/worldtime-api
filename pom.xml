@@ -7,7 +7,7 @@
 
     <groupId>dbede75e-6b29-4063-ac16-b9cad78a7cc4</groupId>
     <artifactId>worldtime-api</artifactId>
-    <version>1.5.6</version>
+    <version>1.5.7</version>
     <packaging>mule-application</packaging>
 
     <name>worldtime-api</name>
@@ -49,10 +49,23 @@
                     </cloudhub2Deployment>
                 </configuration>
             </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.2.0</version>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.0.1</version>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.0.0</version>
             </plugin>
         </plugins>
     </build>
