@@ -24,6 +24,7 @@ bat """
 mvn clean deploy -DskipTests -U ^
 -Danypoint.client_id=%CLIENT_ID% ^
 -Danypoint.client_secret=%CLIENT_SECRET% ^
+-Dmaven.deploy.skip=true ^
 -DmuleDeploy=false ^
 -DskipExchangeHash=true ^
 -Dmaven.repo.local=C:/Users/ganta/.m2/repository
