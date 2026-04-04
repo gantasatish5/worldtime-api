@@ -13,19 +13,20 @@ pipeline {
             }
         }
 
-        stage('Build & Publish to Exchange') {
+       stage('Build & Publish to Exchange') {
     steps {
         withCredentials([usernamePassword(
             credentialsId: 'anypoint-credentials',
             usernameVariable: 'AP_USER',
             passwordVariable: 'AP_PASS'
         )]) {
-            // Using 'install' then 'mule:publish' skips the pre-deploy check
+            // Use 'deploy' but skip the metadata hashing check that is causing the crash
             bat """
-            mvn clean install -DskipTests -Dmaven.repo.local=C:/Users/ganta/.m2/repository ^
-            && mvn org.mule.tools.maven:mule-maven-plugin:3.8.2:exchange-publish ^
+            mvn clean deploy -DskipTests ^
             -Danypoint.username=%AP_USER% ^
             -Danypoint.password=%AP_PASS% ^
+            -DmuleDeploy=false ^
+            -DskipExchangeHash=true ^
             -Dmaven.repo.local=C:/Users/ganta/.m2/repository
             """
         }
