@@ -22,15 +22,20 @@ stage('Build & Publish to Exchange') {
         )]) {
             // Step 1: Build the JAR locally (This always works for you)
             // Step 2: Push ONLY the Mule artifact to Exchange directly
-            bat """
-            mvn clean install -DskipTests -Dmaven.repo.local=C:/Users/ganta/.m2/repository ^
-            && mvn mule:deploy -DskipTests ^
-            -Danypoint.client_id=%CLIENT_ID% ^
-            -Danypoint.client_secret=%CLIENT_SECRET% ^
-            -Danypoint.orgId=dbede75e-6b29-4063-ac16-b9cad78a7cc4 ^
-            -DmuleDeploy=false ^
-            -Dmaven.repo.local=C:/Users/ganta/.m2/repository
-            """
+bat """
+mvn clean deploy -DskipTests ^
+-Danypoint.client_id=%CLIENT_ID% ^
+-Danypoint.client_secret=%CLIENT_SECRET% ^
+-DmuleDeploy=false ^
+-DskipExchangeHash=true ^
+-Dmaven.deploy.skip=true ^
+-Dmaven.repo.local=C:/Users/ganta/.m2/repository ^
+&& mvn mule:deploy -DskipTests ^
+-Danypoint.client_id=%CLIENT_ID% ^
+-Danypoint.client_secret=%CLIENT_SECRET% ^
+-Danypoint.orgId=dbede75e-6b29-4063-ac16-b9cad78a7cc4 ^
+-Dmaven.repo.local=C:/Users/ganta/.m2/repository
+"""
         }
     }
 }
